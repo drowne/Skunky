@@ -1,6 +1,11 @@
 module (..., package.seeall)
 
-local globalLayer = display.newGroup()
+local globalLayer 	= display.newGroup()
+
+local jumpForce 	= 5
+local isGrounded 	= true
+local canJump 		= true
+local timeToJump 	= 1000
 
 function new()
 	
@@ -18,4 +23,23 @@ function new()
 									isSensor = false})
 	
 	return globalLayer
+end
+
+function globalLayer:update()
+	--print("update")
+end
+
+function canJumpAgain()
+	canJump = true
+end
+
+function globalLayer:jump()
+	
+	-- check if it's on ground and
+	-- thus can jump or not
+	if(isGrounded and canJump)	then
+		globalLayer:applyLinearImpulse(0,-jumpForce)
+		canJump = false
+		timer.performWithDelay(timeToJump, canJumpAgain)
+	end
 end
