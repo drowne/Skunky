@@ -48,6 +48,11 @@ function onTap(event)
 	
 end
 
+function removeListeners()
+	Runtime:removeEventListener("enterFrame", update)
+	Runtime:removeEventListener("tap", onTap)
+end
+
 function new()
 	
 	init()
