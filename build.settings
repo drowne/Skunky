@@ -1,0 +1,29 @@
+settings = {
+	orientation =
+	{
+		default = "landscapeRight",
+	},
+	
+	androidPermissions =
+    {
+            "android.permission.INTERNET"
+    },
+	
+	iphone =
+	{
+		plist=
+		{
+			UIAppFonts = {
+				"SPACEBOY.TTF"
+			},
+			
+			UIStatusBarHidden=true,
+	        CFBundleIconFile = "Icon.png",
+	        CFBundleIconFiles = {
+	           "Icon.png", 
+	           "Icon@2x.png", 
+	           "Icon-72.png", 
+	        },
+		},
+	}
+}
