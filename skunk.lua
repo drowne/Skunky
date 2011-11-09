@@ -3,8 +3,10 @@ module (..., package.seeall)
 local globalLayer 	= display.newGroup()
 
 local jumpForce 	= 5
-local isGrounded 	= true
+local fartForce		= 6
 local canJump 		= true
+local canFart		= true
+local timeToFart	= 500
 local timeToJump 	= 1000
 
 function new()
@@ -33,13 +35,24 @@ function canJumpAgain()
 	canJump = true
 end
 
+function canFartAgain()
+	canFart = true
+end
+
 function globalLayer:jump()
-	
-	-- check if it's on ground and
-	-- thus can jump or not
-	if(isGrounded and canJump)	then
+	-- check if it can jump or not
+	if canJump	then
 		globalLayer:applyLinearImpulse(0,-jumpForce)
 		canJump = false
 		timer.performWithDelay(timeToJump, canJumpAgain)
+	end
+end
+
+function globalLayer:fart()
+	-- check if it can jump or not
+	if canFartAgain	then
+		globalLayer:applyLinearImpulse(fartForce,0)
+		canFart = false
+		timer.performWithDelay(timeToFart, canFartAgain)
 	end
 end
