@@ -1,6 +1,15 @@
 module(..., package.seeall)
 
 local Vector2D = require("vector2d")
+local nurbs    = require("nurbs")
+
+function initialize()
+	nurbs.new()
+end
+
+function addPoints(_x, _y)
+	nurbs.addPoints(_x, _y)
+end
 
 function newGround(startPointX, startPointY, targetX, targetY, parent)
 

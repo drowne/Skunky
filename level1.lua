@@ -5,6 +5,7 @@ local physics     = require("physics")
 local skunk       = require("skunk")
 local Collectable = require("collectable")
 local highscore   = require("highscore")
+local ground      = require("ground")
 
 -- global variables
 _G.firstTouch     = true
@@ -46,7 +47,8 @@ function onTap(event)
 	
 	if not _G.firstTouch then
 		if not _G.gameEnded then
-			skunkInstance.jump()			
+			skunkInstance.jump()
+			ground.addPoints(event.x, event.y)			
 		end
 	else
 		_G.firstTouch = false
@@ -74,6 +76,8 @@ function new()
 	skunkInstance = skunk.new()
 	globalLayer:insert(skunkInstance)
 	globalLayer:insert(Collectable.getCollectablesLayer())
+
+	ground.initialize()
 
 	populateCollectables()
 
