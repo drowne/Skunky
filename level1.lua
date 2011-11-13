@@ -22,8 +22,8 @@ _G.localhighscore = 0
 local globalLayer = display.newGroup()
 local skunkInstance
 local startPointX = -_H/2.4
-local startPointY = 0
-local targetX = _H - 40
+local startPointY = 200
+local targetX = _H * 1.2
 local targetY = _W * 1.5
 
 function init()

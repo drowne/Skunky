@@ -8,7 +8,11 @@ local controlPoints = {}
 local order = 4
 local Epsilon = 0.00001
 local gControlPoints
+local controlPointsNum
 
+function setControlPointNum(newOrder)
+	controlPointsNum = newOrder
+end
 
 function newNurbsCurve (precision)
 
@@ -141,8 +145,8 @@ function drawNurbs (precision)
 
 	for i = 1, precision - 1, 1 do 
 		local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-		line:setColor(128,128,128);
-		line.width = 6;
+		line:setColor(255, 0, 0);
+		line.width = 5;
 		gControlPoints:insert( line )
 	end 
 end
@@ -160,7 +164,7 @@ function addPoints (_x, _y)
 	local rect = display.newRect(point.x, point.y, 15, 15)
 	gControlPoints:insert(rect)	
 
-	if(numPoints >= order) then
+	if(numPoints >= controlPointsNum) then
 		drawNurbs(30)
 	end
 end
