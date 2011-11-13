@@ -1,12 +1,12 @@
 #Skunky - The Flying Skunk 
 
-**Skunky** is an iPhone game with procedurally generated levels. It's our group project for the Procedural Content Generation course at IT-University of Copenhagen.
+**Skunky** is an iPhone game with procedurally generated levels, generated according to the player playstyle. It's our group project for the Procedural Content Generation course at IT-University of Copenhagen. 
 
 **TO-DO**
 
 * Use the PCGed control points to generate a smooth curve using bSPlines or NURBS
 * <strike>Make the speed boost with farting</strike>
-* Make the collectables
+* <strike>Make the collectables</strike>
 * Use the PCGed control points to distribute the collectables in proper places
 * Calculate a score
 * Find a fitness value for a player/level combination

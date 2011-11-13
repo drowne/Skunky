@@ -17,6 +17,8 @@ function new()
 	--skunkImage.x = 0
 	--skunkImage.y = 0
 	
+	globalLayer.name = "skunk"
+
 	physics.addBody(globalLayer, "dynamic", {
 									radius = 10,
 									density = 1.0, 
@@ -25,6 +27,10 @@ function new()
 									isSensor = false})
 	
 	return globalLayer
+end
+
+function globalLayer:pickCollectable()
+	print("collectable")
 end
 
 function globalLayer:update()
