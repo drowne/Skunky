@@ -4,7 +4,7 @@ module (..., package.seeall)
 local physics     = require("physics")
 local skunk       = require("skunk")
 local Collectable = require("collectable")
-local highscore	  = require("highscore")
+local highscore   = require("highscore")
 
 -- global variables
 _G.firstTouch     = true
