@@ -1,7 +1,7 @@
 module (..., package.seeall)
 
 -- highscore file
-local path = system.pathForFile( "highscore.txt", system.DocumentsDirectory )
+local path = system.pathForFile( "skunkyHS.txt", system.DocumentsDirectory )
 
 function getHighScore()
 	
