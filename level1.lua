@@ -1,13 +1,17 @@
 module (..., package.seeall)
 
 -- includes
-local physics = require("physics")
-local skunk = require("skunk")
+local physics     = require("physics")
+local skunk       = require("skunk")
+local Collectable = require("collectable")
+local highscore	  = require("highscore")
 
 -- global variables
-_G.firstTouch = true
-_G.gameStarted = false
-_G.gameEnded = false
+_G.firstTouch     = true
+_G.gameStarted    = false
+_G.gameEnded      = false
+_G.score          = 0
+_G.localhighscore = 0
 
 -- drawing variables
 local globalLayer = display.newGroup()
@@ -20,6 +24,8 @@ local _W = display.contentWidth
 function init()
 	physics.setDrawMode( "hybrid" )
 	physics.start()
+	-- load highscore
+	_G.localhighscore = highscore.getHighScore()
 end
 
 function setupBackground()
@@ -53,6 +59,13 @@ function removeListeners()
 	Runtime:removeEventListener("tap", onTap)
 end
 
+function populateCollectables()
+
+	-- create a collectable
+	local choco1 = Collectable.new(0, 100)
+
+end
+
 function new()
 	
 	init()
@@ -60,7 +73,10 @@ function new()
 	
 	skunkInstance = skunk.new()
 	globalLayer:insert(skunkInstance)
-	
+	globalLayer:insert(Collectable.getCollectablesLayer())
+
+	populateCollectables()
+
 	Runtime:addEventListener("enterFrame", update)
 	Runtime:addEventListener("tap", onTap)
 	
