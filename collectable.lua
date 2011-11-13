@@ -14,7 +14,7 @@ function new(_x, _y)
 	physics.addBody(collectable, "static", {density = 1.0, friction = 0.3, bounce = 0.2, isSensor = true})
 
 	local function onLocalCollision( event )
-        if event.phase == "began" and event.other.name == "skunk"  then
+        if event.phase == "began" and event.other.name == "skunk" and collectable.isVisible then
 			event.other.pickCollectable()
 			collectable.isVisible = false
 			audio.play( collectableSound )			
