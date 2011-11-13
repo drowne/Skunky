@@ -7,6 +7,10 @@ local Collectable = require("collectable")
 local highscore   = require("highscore")
 local ground      = require("ground")
 
+-- utils variables
+local _H = display.contentHeight
+local _W = display.contentWidth
+
 -- global variables
 _G.firstTouch     = true
 _G.gameStarted    = false
@@ -17,10 +21,10 @@ _G.localhighscore = 0
 -- drawing variables
 local globalLayer = display.newGroup()
 local skunkInstance
-
--- utils variables
-local _H = display.contentHeight
-local _W = display.contentWidth
+local startPointX = -_H/2.4
+local startPointY = 0
+local targetX = _H - 40
+local targetY = _W * 1.5
 
 function init()
 	physics.setDrawMode( "hybrid" )
@@ -48,7 +52,7 @@ function onTap(event)
 	if not _G.firstTouch then
 		if not _G.gameEnded then
 			skunkInstance.jump()
-			ground.addPoints(event.x, event.y)			
+			--ground.addPoints(event.x, event.y)			
 		end
 	else
 		_G.firstTouch = false
@@ -78,6 +82,7 @@ function new()
 	globalLayer:insert(Collectable.getCollectablesLayer())
 
 	ground.initialize()
+	ground.newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	populateCollectables()
 
