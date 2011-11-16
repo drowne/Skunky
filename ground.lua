@@ -24,6 +24,7 @@ end
 function newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	local segmentList = {}
+	local tempList = {}
 	local offsetAmount = 500
 
 	local segment = {startPointX, startPointY, targetX, targetY}
@@ -36,7 +37,7 @@ function newGround(startPointX, startPointY, targetX, targetY, parent)
 	for i=1, TOTAL_ITERATIONS do
 		for j=1, #segmentList do
 			
-			local tempSegment = segmentList[segmentIndex]
+			local tempSegment = segmentList[j]
 			
 			local midPointX = tempSegment[1] + (tempSegment[3] - tempSegment[1])/2
 			local midPointY = tempSegment[2] + (tempSegment[4] - tempSegment[2])/2
@@ -55,11 +56,13 @@ function newGround(startPointX, startPointY, targetX, targetY, parent)
 			local segment1 = {tempSegment[1],tempSegment[2], midPointX2, midPointY2}
 			local segment2 = {midPointX2, midPointY2, tempSegment[3], tempSegment[4]}
 
-			table.remove(segmentList, 1)
-			table.insert(segmentList, segment1)
-			table.insert(segmentList, segment2)
+			table.insert(tempList, segment1)
+			table.insert(tempList, segment2)
 		end
 		offsetAmount = offsetAmount / 2
+
+		removeAll(segmentList)
+		segmentList = moveAll(tempList)
 	end	
 	
 
@@ -71,4 +74,22 @@ function newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	end
 			
+end
+
+function removeAll(array)
+
+	for j = 1, #array do
+		table.remove(array)
+	end
+end
+
+function moveAll(source)
+	local destination = {}
+	
+	for j = 1, #source do
+		local segment = table.remove(source, 1)
+		table.insert(destination, segment)
+	end
+
+	return destination
 end
