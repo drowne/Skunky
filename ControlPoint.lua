@@ -1,11 +1,11 @@
 module(..., package.seeall)
 
 function new ()
-	local globalLayer = display.newGroup()
+	local cp = {}
 
-	globalLayer.x = 0
-	globalLayer.y = 0
-	globalLayer.weight = 1
+	cp.x = 0
+	cp.y = 0
+	cp.weight = 1
 
-	return globalLayer
+	return cp
 end
