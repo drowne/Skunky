@@ -45,13 +45,16 @@ function setupBackground()
 	
 end
 
-function update()
-	--skunkInstance.update()
-	
-	-- camera 
+function updateCamera()
 	globalLayer.x = -skunkInstance.x
 	globalLayer.y = -skunkInstance.y + 200
+end
 
+function update()
+	--skunkInstance.update()
+	--ground.update(skunkInstance.x)
+	
+	updateCamera()
 end
 
 function onTap(event)
