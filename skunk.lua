@@ -2,8 +2,8 @@ module (..., package.seeall)
 
 local globalLayer 	= display.newGroup()
 
-local jumpForce 	= 5
-local fartForce		= 6
+local jumpForce 	= 8
+local fartForce		= 3
 local canJump 		= true
 local canFart		= true
 local timeToFart	= 500
@@ -23,7 +23,7 @@ function new()
 	globalLayer.y = 0
 
 	physics.addBody(globalLayer, "dynamic", {
-									radius = 10,
+									radius = 15,
 									density = 1.0, 
 									friction = 0.3, 
 									bounce = 0.2, 
