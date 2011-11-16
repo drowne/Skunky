@@ -27,8 +27,8 @@ function newNurbsCurve (precision)
         point.y = 0
         
         for ctrlPointIndex = 1, numPoints do                
-            point.x = point.x + controlPoints[ctrlPointIndex].x * nurbsBasisFunctions[i][ctrlPointIndex][order];
-            point.y = point.y + controlPoints[ctrlPointIndex].y * nurbsBasisFunctions[i][ctrlPointIndex][order];            
+            point.x = point.x + controlPoints[ctrlPointIndex].x * nurbsBasisFunctions[i][ctrlPointIndex][order]
+            point.y = point.y + controlPoints[ctrlPointIndex].y * nurbsBasisFunctions[i][ctrlPointIndex][order]
         end        
 
         
@@ -147,6 +147,11 @@ function drawNurbs (precision)
 		local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
 		line:setColor(255, 0, 0);
 		line.width = 5;
+
+        -- physic body
+        local lineShape = { points[i].x, points[i].y, points[i + 1].x, points[i + 1].y }
+        physics.addBody(line, "static", {shape = lineShape})
+
 		gControlPoints:insert( line )
 	end 
 end

@@ -3,11 +3,17 @@ module(..., package.seeall)
 local Vector2D = require("vector2d")
 local nurbs    = require("nurbs")
 
+local globalLayer = display.newGroup()
+
 local TOTAL_ITERATIONS = 5	
 
 function initialize()
-	nurbs.new()
+	globalLayer:insert(nurbs.new())
 	nurbs.setControlPointNum( math.pow(2, TOTAL_ITERATIONS) )
+end
+
+function getGlobalLayer()
+	return globalLayer
 end
 
 function addPoints(_x, _y)
