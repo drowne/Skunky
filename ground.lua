@@ -5,7 +5,7 @@ local nurbs    = require("nurbs")
 
 local globalLayer = display.newGroup()
 
-local TOTAL_ITERATIONS = 5	
+local TOTAL_ITERATIONS = 2	
 
 function initialize()
 	globalLayer:insert(nurbs.new())
@@ -24,7 +24,7 @@ end
 function newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	local segmentList = {}
-	local offsetAmount = 300
+	local offsetAmount = 500
 
 	local segment = {startPointX, startPointY, targetX, targetY}
 
