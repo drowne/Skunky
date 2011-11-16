@@ -28,6 +28,7 @@ function newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	local segment = {startPointX, startPointY, targetX, targetY}
 
+	math.randomseed(os.time())
 	table.insert(segmentList, segment)
 
 	local segmentIndex = 1
@@ -44,8 +45,7 @@ function newGround(startPointX, startPointY, targetX, targetY, parent)
 			local endPtVector = Vector2D:new(tempSegment[3],tempSegment[4])
 			local dirVector = Vector2D:Normalize(Vector2D:Sub(endPtVector,startPtVector))
 			local perpendicularVector = Vector2D:Perpendicular(dirVector)
-
-			math.randomseed(os.time() * j)
+			
 			local randomOffset = math.random(-offsetAmount,offsetAmount)
 			perpendicularVector:mult(randomOffset)
 
