@@ -9,6 +9,8 @@ local canFart		= true
 local timeToFart	= 500
 local timeToJump 	= 1000
 
+local hspeed, vspeed, oldX, oldY
+
 function new()
 	
 	-- draw the skunk and add it to the globallayer
@@ -38,7 +40,28 @@ function globalLayer:pickCollectable()
 end
 
 function globalLayer:update()
-	--print("update")
+
+	if oldX and oldY then
+		hspeed = globalLayer.x - oldX
+		vspeed = globalLayer.y - oldY
+		--print("hspeed: " .. hspeed .. " vspeed: " .. vspeed)
+	end
+	
+	oldX = globalLayer.x
+	oldY = globalLayer.y
+	
+end
+
+function globalLayer:getHSpeed()
+	return hspeed
+end
+
+function globalLayer:getVSpeed()
+	return vspeed
+end
+
+function globalLayer:getSpeed()
+	return hspeed,vspeed
 end
 
 function canJumpAgain()

@@ -51,7 +51,7 @@ function updateCamera()
 end
 
 function update()
-	--skunkInstance.update()
+	skunkInstance.update()
 	--ground.update(skunkInstance.x)
 	
 	updateCamera()
