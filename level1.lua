@@ -68,7 +68,7 @@ end
 function populateCollectables()
 
 	-- create a collectable
-	local choco1 = Collectable.new(0, 100)
+	--local choco1 = Collectable.new(0, 100)
 
 end
 
@@ -81,7 +81,7 @@ function new()
 	globalLayer:insert(skunkInstance)
 	globalLayer:insert(Collectable.getCollectablesLayer())
 
-	ground.initialize()
+	globalLayer:insert(ground.initialize())
 	ground.newGround(startPointX, startPointY, targetX, targetY, parent)
 
 	populateCollectables()

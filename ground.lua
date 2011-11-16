@@ -10,6 +10,7 @@ local TOTAL_ITERATIONS = 5
 function initialize()
 	globalLayer:insert(nurbs.new())
 	nurbs.setControlPointNum( math.pow(2, TOTAL_ITERATIONS) )
+	return globalLayer
 end
 
 function getGlobalLayer()
