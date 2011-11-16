@@ -11,16 +11,16 @@ local gControlPoints
 local controlPointsNum
 
 function setControlPointNum(newOrder)
-	controlPointsNum = newOrder
+    controlPointsNum = newOrder
 end
 
 function newNurbsCurve (precision)
 
-	local points = {}
-	local knotVector = setKnotVector ()
-	local nurbsBasisFunctions = defineBasisFunctions (precision, knotVector)
+    local points = {}
+    local knotVector = setKnotVector ()
+    local nurbsBasisFunctions = defineBasisFunctions (precision, knotVector)
 
-	for i  = 1 , precision do            
+    for i  = 1 , precision do            
 
         local point = {}
         point.x = 0
@@ -39,7 +39,7 @@ function newNurbsCurve (precision)
 end
 
 function setKnotVector ()
-	local knots = {}
+    local knots = {}
     local knotValue = 0    
 
     for i = 0, order + numPoints - 1 do            
@@ -54,7 +54,7 @@ function setKnotVector ()
 end
 
 function defineBasisFunctions (precision, knotVector)
-	local nurbsBasisFunctions = {}
+    local nurbsBasisFunctions = {}
     local basisFunctions = {}
 
     for j = 1, precision do basisFunctions[j] = {} end
@@ -62,17 +62,17 @@ function defineBasisFunctions (precision, knotVector)
 
     for vertexIndex = 1, precision do
         
-     	for j = 1, numPoints + 1 do basisFunctions[vertexIndex][j] = {} end
-       	for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][j] = {} end
+        for j = 1, numPoints + 1 do basisFunctions[vertexIndex][j] = {} end
+        for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][j] = {} end
 
         local t = (vertexIndex - 1) / (precision - 1)
 
         if (t == 1) then t = 1 - Epsilon end
 
         for ctrlPointIndex = 1, numPoints + 1 do
-            	
-           	for j = 1, numPoints + 1 do basisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
-       		for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
+                
+            for j = 1, numPoints + 1 do basisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
+            for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
 
             if (t >= knotVector[ctrlPointIndex] and t < knotVector[ctrlPointIndex + 1]) then
                 basisFunctions[vertexIndex][ctrlPointIndex][1] = 1
@@ -86,7 +86,7 @@ function defineBasisFunctions (precision, knotVector)
             
         for ctrlPointIndex = 1, numPoints do
                 
-    	    for vertexIndex = 1, precision do
+            for vertexIndex = 1, precision do
                     
                 local t = (vertexIndex - 1) / (precision - 1);
 
@@ -126,8 +126,8 @@ function defineBasisFunctions (precision, knotVector)
                 local denominator = 0;
                 for controlWeight = 1, numPoints do
                         
-        	        denominator = denominator + controlPoints[controlWeight].weight * basisFunctions[vertexIndex][controlWeight][orderIndex];
-    	        end
+                    denominator = denominator + controlPoints[controlWeight].weight * basisFunctions[vertexIndex][controlWeight][orderIndex];
+                end
 
                 nurbsBasisFunctions[vertexIndex][ctrlPointIndex][orderIndex] = controlPoints[ctrlPointIndex].weight *
                                                                            basisFunctions[vertexIndex][ctrlPointIndex][orderIndex] /
@@ -141,12 +141,12 @@ function defineBasisFunctions (precision, knotVector)
 end
 
 function drawNurbs (precision)
-	local points = newNurbsCurve (precision)
+    local points = newNurbsCurve (precision)
 
-	for i = 1, precision - 1, 1 do 
-		local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-		line:setColor(255, 0, 0);
-		line.width = 5;
+    for i = 1, precision - 1, 1 do 
+        local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        line:setColor(255, 0, 0);
+        line.width = 5;
 
         -- physic body
         local xDist = (points[i].x - points[i+1].x)/2
@@ -155,30 +155,29 @@ function drawNurbs (precision)
         
         physics.addBody(line, "static", { shape = lineShape} )
 
-		gControlPoints:insert( line )
-	end 
+        gControlPoints:insert( line )
+    end 
 end
 
-
 function addPoints (_x, _y)
-	
-	numPoints = numPoints + 1;
-	local point = ControlPoint.new()
-	point.x = _x
-	point.y = _y
+    
+    numPoints = numPoints + 1;
+    local point = ControlPoint.new()
+    point.x = _x
+    point.y = _y
 
-	table.insert (controlPoints, point);
+    table.insert (controlPoints, point);
 
-	local rect = display.newRect(point.x, point.y, 15, 15)
-	gControlPoints:insert(rect)	
+    local rect = display.newRect(point.x, point.y, 15, 15)
+    gControlPoints:insert(rect) 
 
-	if(numPoints >= controlPointsNum) then
-		drawNurbs(30)
-	end
+    if(numPoints >= controlPointsNum) then
+        drawNurbs(30)
+    end
 end
 
 function new()
-	gControlPoints = display.newGroup()
+    gControlPoints = display.newGroup()
 
-	return gControlPoints
+    return gControlPoints
 end
