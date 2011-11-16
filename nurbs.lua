@@ -151,10 +151,9 @@ function drawNurbs (precision)
         -- physic body
         local xDist = (points[i].x - points[i+1].x)/2
         local yDist = (points[i].y - points[i+1].y)/2
-        local lineShape = { -xDist,-yDist, xDist,yDist }
+        local lineShape = { -xDist,-yDist, xDist,yDist--[[, xDist,yDist+10, -xDist,-yDist+10]] }
         
-        -- just a random square: { -20,-10, 20,-10, 20,10, -20,10 }
-        physics.addBody(line, "static", {shape = lineShape})
+        physics.addBody(line, "static", { shape = lineShape} )
 
 		gControlPoints:insert( line )
 	end 
