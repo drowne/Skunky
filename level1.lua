@@ -6,6 +6,7 @@ local skunk       = require("skunk")
 local Collectable = require("collectable")
 local highscore   = require("highscore")
 local ground      = require("ground")
+local test		  = require("test")
 
 -- utils variables
 local _H = display.contentHeight
@@ -87,12 +88,16 @@ function new()
 	init()
 	setupBackground()
 	
+	--local prova = test.new()
+	--prova:bla2()
+
 	skunkInstance = skunk.new()
 	globalLayer:insert(skunkInstance)
 	globalLayer:insert(Collectable.getCollectablesLayer())
 
 	globalLayer:insert(ground.initialize())
 	ground.newGround(startPointX, startPointY, targetX, targetY, parent)
+	ground.newGround(targetX, targetY, targetX*2, targetY, parent)
 
 	populateCollectables()
 
