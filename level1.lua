@@ -36,7 +36,9 @@ end
 function setupBackground()
 	
 	local background = display.newImage("background.png")
-	globalLayer:insert(background)
+	-- fixed background, uncomment to have a dynamic one
+	--globalLayer:insert(background)
+	background:toBack()
 	background.x = _W/2
 	background.y = _H/2
 	background:scale(1.5, 1.5)
