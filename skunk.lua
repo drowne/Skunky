@@ -18,13 +18,17 @@ function new()
 	--skunkImage.y = 0
 	
 	globalLayer.name = "skunk"
+	
+	globalLayer.x = 100
+	globalLayer.y = 0
 
 	physics.addBody(globalLayer, "dynamic", {
 									radius = 10,
 									density = 1.0, 
 									friction = 0.3, 
 									bounce = 0.2, 
-									isSensor = false})
+									isSensor = false,
+									isBullet = true})
 	
 	return globalLayer
 end
