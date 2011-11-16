@@ -45,6 +45,11 @@ end
 
 function update()
 	--skunkInstance.update()
+	
+	-- camera 
+	globalLayer.x = -skunkInstance.x
+	globalLayer.y = -skunkInstance.y + 200
+
 end
 
 function onTap(event)
