@@ -2,23 +2,40 @@ module (..., package.seeall)
 
 local ControlPoint = require("ControlPoint")
 
-local generated = FALSE
-local numPoints = 0
-local controlPoints = {}
-local order = 4
+local PRECISION = 30
 local Epsilon = 0.00001
-local gControlPoints
-local controlPointsNum
 
-function setControlPointNum(newOrder)
-    controlPointsNum = newOrder
+function new()
+    
+    local self = display.newGroup()
+
+    --local attributes
+    self.numPoints = 0
+    self.controlPoints = {}
+    self.maxControlPoints = 4
+    self.order = 4
+
+    --methods
+    self.setMaxControlPoints = setMaxControlPoints
+    self.addPoints = addPoints
+    self.generateNurbsCurve = generateNurbsCurve
+    self.setKnotVector = setKnotVector
+    self.defineBasisFunctions = defineBasisFunctions
+    self.drawNurbs = drawNurbs
+    self.addPoints = addPoints
+
+    return self
 end
 
-function newNurbsCurve (precision)
+function setMaxControlPoints(self, max)
+    self.maxControlPoints = max
+end
+
+function generateNurbsCurve (self, precision)
 
     local points = {}
-    local knotVector = setKnotVector ()
-    local nurbsBasisFunctions = defineBasisFunctions (precision, knotVector)
+    local knotVector = self:setKnotVector()
+    local nurbsBasisFunctions = self:defineBasisFunctions(precision, knotVector)
 
     for i  = 1 , precision do            
 
@@ -26,9 +43,9 @@ function newNurbsCurve (precision)
         point.x = 0
         point.y = 0
         
-        for ctrlPointIndex = 1, numPoints do                
-            point.x = point.x + controlPoints[ctrlPointIndex].x * nurbsBasisFunctions[i][ctrlPointIndex][order]
-            point.y = point.y + controlPoints[ctrlPointIndex].y * nurbsBasisFunctions[i][ctrlPointIndex][order]
+        for ctrlPointIndex = 1, self.numPoints do                
+            point.x = point.x + self.controlPoints[ctrlPointIndex].x * nurbsBasisFunctions[i][ctrlPointIndex][self.order]
+            point.y = point.y + self.controlPoints[ctrlPointIndex].y * nurbsBasisFunctions[i][ctrlPointIndex][self.order]
         end        
 
         
@@ -38,22 +55,22 @@ function newNurbsCurve (precision)
     return points
 end
 
-function setKnotVector ()
+function setKnotVector (self)
     local knots = {}
     local knotValue = 0    
 
-    for i = 0, order + numPoints - 1 do            
-        if (i <= numPoints and i >= order) then
+    for i = 0, self.order + self.numPoints - 1 do            
+        if (i <= self.numPoints and i >= self.order) then
             knotValue = knotValue + 1
         end
         
-        table.insert (knots, knotValue / (numPoints - order + 1));
+        table.insert (knots, knotValue / (self.numPoints - self.order + 1));
     end
     
     return knots;
 end
 
-function defineBasisFunctions (precision, knotVector)
+function defineBasisFunctions (self, precision, knotVector)
     local nurbsBasisFunctions = {}
     local basisFunctions = {}
 
@@ -62,17 +79,17 @@ function defineBasisFunctions (precision, knotVector)
 
     for vertexIndex = 1, precision do
         
-        for j = 1, numPoints + 1 do basisFunctions[vertexIndex][j] = {} end
-        for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][j] = {} end
+        for j = 1, self.numPoints + 1 do basisFunctions[vertexIndex][j] = {} end
+        for j = 1, self.numPoints + 1 do nurbsBasisFunctions[vertexIndex][j] = {} end
 
         local t = (vertexIndex - 1) / (precision - 1)
 
         if (t == 1) then t = 1 - Epsilon end
 
-        for ctrlPointIndex = 1, numPoints + 1 do
+        for ctrlPointIndex = 1, self.numPoints + 1 do
                 
-            for j = 1, numPoints + 1 do basisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
-            for j = 1, numPoints + 1 do nurbsBasisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
+            for j = 1, self.numPoints + 1 do basisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
+            for j = 1, self.numPoints + 1 do nurbsBasisFunctions[vertexIndex][ctrlPointIndex][j] = 0 end
 
             if (t >= knotVector[ctrlPointIndex] and t < knotVector[ctrlPointIndex + 1]) then
                 basisFunctions[vertexIndex][ctrlPointIndex][1] = 1
@@ -82,9 +99,9 @@ function defineBasisFunctions (precision, knotVector)
         end
     end    
 
-    for orderIndex = 2, order do
+    for orderIndex = 2, self.order do
             
-        for ctrlPointIndex = 1, numPoints do
+        for ctrlPointIndex = 1, self.numPoints do
                 
             for vertexIndex = 1, precision do
                     
@@ -117,19 +134,19 @@ function defineBasisFunctions (precision, knotVector)
         end
     end
 
-    for orderIndex = 2, order do
+    for orderIndex = 2, self.order do
             
-        for ctrlPointIndex = 1, numPoints do
+        for ctrlPointIndex = 1, self.numPoints do
                 
             for vertexIndex = 1, precision do
                     
                 local denominator = 0;
-                for controlWeight = 1, numPoints do
+                for controlWeight = 1, self.numPoints do
                         
-                    denominator = denominator + controlPoints[controlWeight].weight * basisFunctions[vertexIndex][controlWeight][orderIndex];
+                    denominator = denominator + self.controlPoints[controlWeight].weight * basisFunctions[vertexIndex][controlWeight][orderIndex];
                 end
 
-                nurbsBasisFunctions[vertexIndex][ctrlPointIndex][orderIndex] = controlPoints[ctrlPointIndex].weight *
+                nurbsBasisFunctions[vertexIndex][ctrlPointIndex][orderIndex] = self.controlPoints[ctrlPointIndex].weight *
                                                                            basisFunctions[vertexIndex][ctrlPointIndex][orderIndex] /
                                                                            denominator;                
             end
@@ -140,8 +157,8 @@ function defineBasisFunctions (precision, knotVector)
 
 end
 
-function drawNurbs (precision)
-    local points = newNurbsCurve (precision)
+function drawNurbs (self, precision)
+    local points = self:generateNurbsCurve (precision)
 
     for i = 1, precision - 1, 1 do 
         local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
@@ -155,29 +172,24 @@ function drawNurbs (precision)
         
         physics.addBody(line, "static", { shape = lineShape} )
 
-        gControlPoints:insert( line )
+        self:insert( line )
     end 
 end
 
-function addPoints (_x, _y)
+function addPoints (self, _x, _y)
     
-    numPoints = numPoints + 1;
+    self.numPoints = self.numPoints + 1;
+
     local point = ControlPoint.new()
     point.x = _x
     point.y = _y
 
-    table.insert (controlPoints, point);
+    table.insert (self.controlPoints, point);
 
     local rect = display.newRect(point.x, point.y, 15, 15)
-    gControlPoints:insert(rect) 
+    self:insert(rect) 
 
-    if(numPoints >= controlPointsNum) then
-        drawNurbs(30)
+    if(self.numPoints >= self.maxControlPoints) then
+        self:drawNurbs(30)
     end
-end
-
-function new()
-    gControlPoints = display.newGroup()
-
-    return gControlPoints
 end

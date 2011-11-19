@@ -21,7 +21,7 @@ function new()
 	
 	globalLayer.name = "skunk"
 	
-	globalLayer.x = 100
+	globalLayer.x = 400
 	globalLayer.y = 0
 
 	physics.addBody(globalLayer, "dynamic", {

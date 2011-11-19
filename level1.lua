@@ -26,6 +26,7 @@ local startPointX = -_H/2.4
 local startPointY = 200
 local targetX = _H * 1.2
 local targetY = _W * 1.5
+local g
 
 function init()
 	physics.setDrawMode( "hybrid" )
@@ -53,7 +54,7 @@ end
 
 function update()
 	skunkInstance.update()
-	--ground.update(skunkInstance.x)
+	g:update(skunkInstance.x)
 	
 	updateCamera()
 end
@@ -86,18 +87,15 @@ end
 function new()
 	
 	init()
-	setupBackground()
-	
-	--local prova = test.new()
-	--prova:bla2()
+	setupBackground()	
 
 	skunkInstance = skunk.new()
 	globalLayer:insert(skunkInstance)
 	globalLayer:insert(Collectable.getCollectablesLayer())
 
-	globalLayer:insert(ground.initialize())
-	ground.newGround(startPointX, startPointY, targetX, targetY, parent)
-	ground.newGround(targetX, targetY, targetX*2, targetY, parent)
+	g = ground.new()
+	g:generate(startPointX, startPointY)
+	globalLayer:insert(g)
 
 	populateCollectables()
 

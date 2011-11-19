@@ -2,7 +2,7 @@ module (..., package.seeall)
 
 local ControlPoint = require("ControlPoint")
 
-new = function(x, y)
+function new(x, y)
 	
 	-- #PRIVATE VARIABLES
 	local self = {}       -- Object to return
