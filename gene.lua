@@ -95,7 +95,7 @@ function setPoints(self, newPoints)
 end
 
 function getPoints(self)
-	return self.points
+	return self.points or {}
 end
 
 function setFitness(self, newFitness)
@@ -103,5 +103,5 @@ function setFitness(self, newFitness)
 end
 
 function getFitness(self)
-	return self.fitness
+	return self.fitness or 0
 end
