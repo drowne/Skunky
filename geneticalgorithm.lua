@@ -6,14 +6,19 @@ new = function(population, populationSize)
 	
 	local self = {}
 	self.population = population or {}
-	self.populationSize = #population or populationSize or 100
+	self.populationSize = #population or populationSize or 100	
 
 	print(self.populationSize)
 
-	-- initialize population
-	for i=1, self.populationSize do
-		self.population[i]:randomPoints()
+	if #population == 0 then 
+		-- initialize population
+		for i=1, self.populationSize do
+			self.population[i]:randomPoints()
+		end
 	end
+
+	self.produceNextGeneration = produceNextGeneration
+	self.getGene = getGene
 
 	return self
 end

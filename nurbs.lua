@@ -23,6 +23,7 @@ function new()
     self.defineBasisFunctions = defineBasisFunctions
     self.drawNurbs = drawNurbs
     self.addPoints = addPoints
+    self.getControlPoints = getControlPoints
 
     return self
 end
@@ -184,7 +185,7 @@ function addPoints (self, _x, _y)
     point.x = _x
     point.y = _y
 
-    table.insert (self.controlPoints, point);
+    table.insert (self.controlPoints, point)
 
     local rect = display.newRect(point.x, point.y, 15, 15)
     self:insert(rect) 
@@ -192,4 +193,17 @@ function addPoints (self, _x, _y)
     if(self.numPoints >= self.maxControlPoints) then
         self:drawNurbs(30)
     end
+end
+
+function getControlPoints(self)
+    local cp = {}
+
+    for i=1,#self.controlPoints do
+        local point = {}
+        point.x = self.controlPoints[i].x
+        point.y = self.controlPoints[i].y
+        table.insert(cp, point)
+    end
+
+    return cp
 end

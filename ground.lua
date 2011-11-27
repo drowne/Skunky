@@ -2,6 +2,7 @@ module(..., package.seeall)
 
 local Vector2D = require("vector2d")
 local NURBS    = require("nurbs")
+local GA 		  = require("geneticalgorithm")
 
 
 local TOTAL_ITERATIONS = 2
@@ -9,17 +10,21 @@ local OFFSET = 500
 local NURBS_COUNT = 5
 local SEGMENT_WIDTH = 600
 local SEGMENT_HEIGHT = 100
+local FRACTAL_GENERATION_COUNT = 10
 
 function new()
 
 	math.randomseed(os.time())
 
-	local self = display.newGroup()		
+	local self = display.newGroup()
+	self.fractalGeneratedPoints = {}
 	self.secondLastY = 0
 	self.lastX = 0
 	self.lastY = 0
 	self.traveled = 0
 	self.lastPosX = 400
+	self.segmentCount = 0
+	self.ga = nil
 
 	--methods
 	self.generate = generate
@@ -103,6 +108,7 @@ function generateNewSegment(self, startPointX, startPointY, targetX, targetY)
 	self.lastX = segmentList[#segmentList].tx
 	self.lastY = segmentList[#segmentList].ty
 			
+	self.segmentCount = self.segmentCount + 1
 end
 
 function newSegment(self, controlPoints)
@@ -123,15 +129,41 @@ function newSegment(self, controlPoints)
 	self.lastY = controlPoints[#controlPoints].y
 end
 
+function newSegmentFromGene(self, gene)
+
+	local cp = gene:getPoints()
+	self:newSegment(cp)
+
+end
+
 function update(self, posx)
 	
 	self.traveled = self.traveled + posx - self.lastPosX
 	self.lastPosX = posx
 
 	if self.traveled > SEGMENT_WIDTH then
-		self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
-		self:remove(1)
-		self.traveled = 0
+
+		if self.segmentCount == FRACTAL_GENERATION_COUNT then
+			self.ga = GA.new(self.fractalGeneratedPoints)
+			
+			self.ga:produceNextGeneration()
+			local gene = self.ga:getGene(1)
+			self:newSegmentFromGene(gene)
+		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then
+			self.ga:produceNextGeneration()
+			local gene = self.ga:getGene(1)
+			self:newSegmentFromGene(gene)
+		else 
+			self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
+			self.traveled = 0
+			local curve = self:remove(1)
+			local cp = curve:getControlPoints()
+
+			for i=1,#cp do
+				table.insert(self.fractalGeneratedPoints, cp[i])
+			end
+		end
+		print(self.segmentCount)
 	elseif self.traveled < -SEGMENT_WIDTH then
 
 	end
