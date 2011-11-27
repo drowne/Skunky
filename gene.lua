@@ -1,10 +1,12 @@
 module (..., package.seeall)
 
 -- limits for the random generation
-local limitDownX = - 100
-local limitUpX   = 200
-local limitDownY = - 100
-local limitUpY   = 200
+local limitDownX    = - 100
+local limitUpX      = 200
+local limitDownY    = - 100
+local limitUpY      = 200
+local mutationChance  = 0.5
+local mutationLimit = 100
 
 new = function(points, fitness)
 	
@@ -26,9 +28,31 @@ function randomPoints(self)
 	self.points = {}
 
 	for i=1, 5 do
-		table.insert(self.points, math.random(limitDownX, limitUpX))
-		table.insert(self.points, math.random(limitDownY, limitUpY))
+
+		local point
+		point.x = math.random(limitDownX, limitUpX)
+		point.y = math.random(limitDownY, limitUpY)
+
+		table.insert(self.points, point)
 	end
+end
+
+function mutate(self)
+
+	if self.points then
+
+		for i=1, #self.points do
+			
+			if math.random() < mutationChance then
+				self.points[i].y = self.points[i].y + math.random(limitDownY, limitUpY)
+			end
+
+		end
+
+	else
+		self:randomPoints()
+	end
+
 end
 
 function reproduce(self, other)
