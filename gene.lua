@@ -1,12 +1,12 @@
 module (..., package.seeall)
 
 -- limits for the random generation
-local limitDownX    = - 100
-local limitUpX      = 200
-local limitDownY    = - 100
-local limitUpY      = 200
-local mutationChance  = 0.5
-local mutationLimit = 100
+local limitDownX     = - 100
+local limitUpX       = 200
+local limitDownY     = - 100
+local limitUpY       = 200
+local mutationChance = 0.5
+local mutationLimit  = 100
 
 new = function(points, fitness)
 	
@@ -19,6 +19,15 @@ new = function(points, fitness)
 	end
 	
 	self.fitness = fitness or 0
+
+	-- expose methods
+	self.randomPoints = randomPoints
+	self.mutate       = mutate
+	self.reproduce    = reproduce
+	self.setPoints    = setPoints
+	self.getPoints    = getPoints
+	self.setFitness   = setFitness
+	self.getFitness   = getFitness
 
 	return self 
 end
