@@ -25,7 +25,7 @@ function randomPoints(self)
 
 	self.points = {}
 
-	for i=1, 8 do
+	for i=1, 5 do
 		table.insert(self.points, math.random(limitDownX, limitUpX))
 		table.insert(self.points, math.random(limitDownY, limitUpY))
 	end
