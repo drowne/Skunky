@@ -23,6 +23,7 @@ function new()
 
 	--methods
 	self.generate = generate
+	self.generateNewSegment = generateNewSegment
 	self.newSegment = newSegment
 	self.update = update
 
@@ -36,13 +37,13 @@ function generate(self, startPointX, startPointY)
 
 	self.secondLastY = startPointY
 	for i = 1, NURBS_COUNT do
-		self:newSegment(sx, sy, sx + SEGMENT_WIDTH, sy + SEGMENT_HEIGHT)
+		self:generateNewSegment(sx, sy, sx + SEGMENT_WIDTH, sy + SEGMENT_HEIGHT)
 		sx = sx + SEGMENT_WIDTH
 		sy = sy + SEGMENT_HEIGHT
 	end
 end
 
-function newSegment(self, startPointX, startPointY, targetX, targetY)
+function generateNewSegment(self, startPointX, startPointY, targetX, targetY)
 
 	local segmentList = {}
 	local tempList = {}
@@ -104,13 +105,31 @@ function newSegment(self, startPointX, startPointY, targetX, targetY)
 			
 end
 
+function newSegment(self, controlPoints)
+	local curve = NURBS.new()
+	curve:setMaxControlPoints( #controlPoints )
+	self:insert(curve)
+
+	--mirror second y in relation to first point and second to last point of previous segment
+	--for continuity
+	controlPoints[2].y = -(self.secondLastY - controlPoints[1].y)	+ controlPoints[1].y
+
+	for i=1,#controlPoints do
+		curve:addPoints(controlPoints[i].x, controlPoints[i].y)
+	end
+
+	self.secondLastY = controlPoints[#controlPoints - 1].y
+	self.lastX = controlPoints[#controlPoints].x
+	self.lastY = controlPoints[#controlPoints].y
+end
+
 function update(self, posx)
 	
 	self.traveled = self.traveled + posx - self.lastPosX
 	self.lastPosX = posx
 
 	if self.traveled > SEGMENT_WIDTH then
-		self:newSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
+		self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
 		self:remove(1)
 		self.traveled = 0
 	elseif self.traveled < -SEGMENT_WIDTH then
