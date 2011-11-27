@@ -31,7 +31,7 @@ function new()
 	self.generateNewSegment = generateNewSegment
 	self.newSegment = newSegment
 	self.update = update
-	self.newSegmentFromGene = newSegmentFromGene
+	self.newSegmentFromGA = newSegmentFromGA
 
 	return self
 end
@@ -128,11 +128,25 @@ function newSegment(self, controlPoints)
 	self.secondLastY = controlPoints[#controlPoints - 1].y
 	self.lastX = controlPoints[#controlPoints].x
 	self.lastY = controlPoints[#controlPoints].y
+
+	self.segmentCount = self.segmentCount + 1
 end
 
-function newSegmentFromGene(self, gene)
+function newSegmentFromGA(self)
 
+	self.ga:produceNextGeneration()
+	local gene = self.ga:getGene(1)
 	local cp = gene:getPoints()
+
+	local difX = cp[1].x - self.lastX
+	local difY = cp[1].y - self.lastY
+
+	for i=1,#cp do
+		cp[i].x = cp[i].x + difX
+		cp[i].y = cp[i].y + difY
+		print(cp[i].x, cp[i].y)
+	end
+
 	self:newSegment(cp)
 
 end
@@ -144,27 +158,24 @@ function update(self, posx)
 
 	if self.traveled > SEGMENT_WIDTH then
 
+		self.traveled = 0
+		local curve = self:remove(1)
+
 		if self.segmentCount == FRACTAL_GENERATION_COUNT then
 			self.ga = GA.new(self.fractalGeneratedPoints)
-			
-			self.ga:produceNextGeneration()
-			local gene = self.ga:getGene(1)
-			self:newSegmentFromGene(gene)
-		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then
-			self.ga:produceNextGeneration()
-			local gene = self.ga:getGene(1)
-			self:newSegmentFromGene(gene)
+						
+			self:newSegmentFromGA()
+		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then			
+			self:newSegmentFromGA()
 		else 
 			self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
-			self.traveled = 0
-			local curve = self:remove(1)
 			local cp = curve:getControlPoints()
 
 			for i=1,#cp do
 				table.insert(self.fractalGeneratedPoints, cp[i])
 			end
 		end
-		--print(self.segmentCount)
+		print(self.segmentCount)
 	elseif self.traveled < -SEGMENT_WIDTH then
 
 	end
