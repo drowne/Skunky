@@ -69,9 +69,9 @@ function reproduce(self, other)
 	local gene1points = {}
 	local gene2points = {}
 
-	local cut = math.random( self.points.size )
+	local cut = math.random( #self.points )
 
-	for i=1, self.points.size do
+	for i=1, #self.points do
 		
 		if i < cut then
 			table.insert(gene1points, self.points[i])

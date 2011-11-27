@@ -5,12 +5,23 @@ local gene = require("gene")
 new = function(population, populationSize)
 	
 	local self = {}
-	self.population = population or {}
+	--self.population = population or {}
 	self.populationSize = #population or populationSize or 100	
+	self.population = {}
 
-	print(self.populationSize)
+	if population then
+		for z=1, #population, 5 do
 
-	if #population == 0 then 
+			local temp = {}
+			table.insert(temp, population[z])
+			table.insert(temp, population[z+1])
+			table.insert(temp, population[z+2])
+			table.insert(temp, population[z+3])
+			table.insert(temp, population[z+4])			
+
+			table.insert(self.population, gene.new(temp))
+		end
+	else
 		-- initialize population
 		for i=1, self.populationSize do
 			self.population[i]:randomPoints()
@@ -25,9 +36,10 @@ end
 
 function produceNextGeneration(self)
 
-	for i=1, self.populationSize do
+	for i=1, #self.population do
 		local chance = math.random()
-		if self.population[i]:getFitness() < chance then
+		if self.population[i] and self.population[i]:getFitness() < chance then
+			--print("killing an item")
 			table.remove(self.population, i)
 		end
 	end

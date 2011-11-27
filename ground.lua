@@ -31,6 +31,7 @@ function new()
 	self.generateNewSegment = generateNewSegment
 	self.newSegment = newSegment
 	self.update = update
+	self.newSegmentFromGene = newSegmentFromGene
 
 	return self
 end
@@ -163,7 +164,7 @@ function update(self, posx)
 				table.insert(self.fractalGeneratedPoints, cp[i])
 			end
 		end
-		print(self.segmentCount)
+		--print(self.segmentCount)
 	elseif self.traveled < -SEGMENT_WIDTH then
 
 	end
