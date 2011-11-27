@@ -74,5 +74,12 @@ function produceNextGeneration(self)
 end
 
 function getGene(self, index)
-	return self.population[index]
+
+	if index < #population then 
+		return self.population[index]
+	else 
+		print( "EXCEPTION: Gene out of population" )
+		return self.population[#population]
+	end
+	
 end
