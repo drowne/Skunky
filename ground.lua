@@ -138,8 +138,8 @@ function newSegmentFromGA(self)
 	local gene = self.ga:getGene(1)
 	local cp = gene:getPoints()
 
-	local difX = cp[1].x - self.lastX
-	local difY = cp[1].y - self.lastY
+	local difX = self.lastX - cp[1].x
+	local difY = self.lastY - cp[1].y
 
 	for i=1,#cp do
 		cp[i].x = cp[i].x + difX
