@@ -7,6 +7,7 @@ local Collectable = require("collectable")
 local highscore   = require("highscore")
 local ground      = require("ground")
 local test		  = require("test")
+local ga 		  = require("geneticalgorithm")
 
 -- utils variables
 local _H = display.contentHeight
