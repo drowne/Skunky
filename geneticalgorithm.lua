@@ -44,9 +44,17 @@ function produceNextGeneration(self)
 		end
 	end
 
+	-- sort population by fitness
+	table.sort( self.population, 
+
+		function(a, b) 
+			return a:getFitness() < b:getFitness()
+		end
+	)
+
 	local killed = self.populationSize - #self.population
 
-	for j=1, killed/2, 2 do
+	--[[for j=1, killed/2, 2 do
 		
 		local father = self.population[j]
 		local mother = self.population[j+1]
@@ -55,6 +63,12 @@ function produceNextGeneration(self)
 		
 		table.insert(self.population, child1)
 		table.insert(self.population, child2)
+	end]]-- offspring generation, doesn't really work
+
+	for j=1, killed do
+		local temp = self.population[j]
+		temp:mutate()
+		table.insert(self.population, temp)
 	end
 
 end

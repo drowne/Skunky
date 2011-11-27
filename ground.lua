@@ -2,7 +2,7 @@ module(..., package.seeall)
 
 local Vector2D = require("vector2d")
 local NURBS    = require("nurbs")
-local GA 		  = require("geneticalgorithm")
+local GA       = require("geneticalgorithm")
 
 
 local TOTAL_ITERATIONS = 2
@@ -135,7 +135,7 @@ end
 function newSegmentFromGA(self)
 
 	self.ga:produceNextGeneration()
-	local gene = self.ga:getGene(1)
+	local gene = self.ga:getGene(1) -- if the population has been correctly sorted then this gene is the best one
 	local cp = gene:getPoints()
 
 	local difX = self.lastX - cp[1].x

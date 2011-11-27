@@ -3,8 +3,8 @@ module (..., package.seeall)
 -- limits for the random generation
 local limitDownX     = - 100
 local limitUpX       = 200
-local limitDownY     = - 100
-local limitUpY       = 200
+local limitDownY     = - 50
+local limitUpY       = 50
 local mutationChance = 0.5
 local mutationLimit  = 100
 
