@@ -4,7 +4,6 @@ local Vector2D = require("vector2d")
 local NURBS    = require("nurbs")
 local GA       = require("geneticalgorithm")
 
-
 local TOTAL_ITERATIONS = 2
 local OFFSET = 500
 local NURBS_COUNT = 5
@@ -25,6 +24,12 @@ function new()
 	self.lastPosX = 400
 	self.segmentCount = 0
 	self.ga = nil
+
+	-- ga related variables
+	self.newGene = 0
+	self.oldGene = 0
+	self.populationSize = 0
+	self.geneIndex = 1
 
 	--methods
 	self.generate = generate
@@ -134,8 +139,15 @@ end
 
 function newSegmentFromGA(self)
 
-	self.ga:produceNextGeneration()
-	local gene = self.ga:getGene(1) -- if the population has been correctly sorted then this gene is the best one
+	local gene = self.ga:getGene(self.geneIndex)
+
+	if self.geneIndex > self.populationSize +1 then
+		self.ga:produceNextGeneration()
+		self.geneIndex = 1
+	else
+		self.geneIndex = self.geneIndex + 1
+	end
+
 	local cp = gene:getPoints()
 
 	local difX = self.lastX - cp[1].x
@@ -149,24 +161,31 @@ function newSegmentFromGA(self)
 
 	self:newSegment(cp)
 
+	return gene
+
 end
 
-function update(self, posx)
+function update(self, posx, speed)
 	
 	self.traveled = self.traveled + posx - self.lastPosX
 	self.lastPosX = posx
 
 	if self.traveled > SEGMENT_WIDTH then
-
+		
 		self.traveled = 0
 		local curve = self:remove(1)
 
 		if self.segmentCount == FRACTAL_GENERATION_COUNT then
 			self.ga = GA.new(self.fractalGeneratedPoints)
-						
-			self:newSegmentFromGA()
-		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then			
-			self:newSegmentFromGA()
+			self.populationSize = self.ga:getPopulationSize()
+			self.newGene = self:newSegmentFromGA()
+		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then
+			self.oldGene = self.newGene		
+			self.newGene = self:newSegmentFromGA()
+
+			speed = speed or 0
+			self.oldGene:setFitness(speed)
+			print("fitness: " .. speed/_G.NORMALIZINGVALUE)
 		else 
 			self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
 			local cp = curve:getControlPoints()
@@ -175,7 +194,6 @@ function update(self, posx)
 				table.insert(self.fractalGeneratedPoints, cp[i])
 			end
 		end
-		print(self.segmentCount)
 	elseif self.traveled < -SEGMENT_WIDTH then
 
 	end

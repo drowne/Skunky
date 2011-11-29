@@ -54,7 +54,8 @@ end
 
 function update()
 	skunkInstance.update()
-	g:update(skunkInstance.x)
+	local vx, vy = skunkInstance:getLinearVelocity()
+	g:update(skunkInstance.x, vx+vy)
 	
 	updateCamera()
 end

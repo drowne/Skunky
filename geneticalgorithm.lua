@@ -2,6 +2,8 @@ module (..., package.seeall)
 
 local gene = require("gene")
 
+_G.NORMALIZINGVALUE = 3000
+
 new = function(population, populationSize)
 	
 	local self = {}
@@ -30,15 +32,20 @@ new = function(population, populationSize)
 
 	self.produceNextGeneration = produceNextGeneration
 	self.getGene = getGene
+	self.getPopulationSize = getPopulationSize
 
 	return self
+end
+
+function getPopulationSize(self)
+	return #self.population
 end
 
 function produceNextGeneration(self)
 
 	for i=1, #self.population do
 		local chance = math.random()
-		if self.population[i] and self.population[i]:getFitness() < chance then
+		if self.population[i] and self.population[i]:getFitness()/_G.NORMALIZINGVALUE < chance then
 			--print("killing an item")
 			table.remove(self.population, i)
 		end
@@ -75,11 +82,11 @@ end
 
 function getGene(self, index)
 
-	if index < #population then 
+	if index < #self.population then 
 		return self.population[index]
 	else 
 		print( "EXCEPTION: Gene out of population" )
-		return self.population[#population]
+		return self.population[#self.population]
 	end
 	
 end

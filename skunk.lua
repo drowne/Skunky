@@ -50,7 +50,7 @@ function globalLayer:update()
 	oldX = globalLayer.x
 	oldY = globalLayer.y
 
-	globalLayer:applyLinearImpulse(0.1,0)
+	--globalLayer:applyLinearImpulse(0.1,0)
 	
 end
 
