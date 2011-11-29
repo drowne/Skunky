@@ -4,15 +4,15 @@
 
 **TO-DO**
 
-* <strike>Use the PCGed control points to generate a smooth curve using NURBS</strike>
-* <strike>Make the speed boost with farting</strike>
-* <strike>Make the collectables</strike>
-* <strike>Make a GA for the segments</strike>
+* Use the PCGed control points to generate a smooth curve using NURBS
+* [DONE] Make the speed boost with farting
+* [DONE] Make the collectables
+* [DONE] Make a GA for the segments
 * Use the PCGed control points to distribute the collectables in proper places
 * Calculate a score
 * Find a fitness value for a player/level combination
-* Get and store some data about the player/level combination
-* <strike>Generate a next level</strike>
-* <strike>Generate the next level using the collected data from previous levels</strike>
+* [DONE] Get and store some data about the player/level combination
+* [DONE] Generate a next level
+* [DONE] Generate the next level using the collected data from previous levels
 * Display a nice end level screen with stats
-* <strike>Facebook Integration & Posting to user wall</strike>
+* [DONE] Facebook Integration & Posting to user wall

@@ -24,10 +24,11 @@ function new()
 	self.lastPosX = 400
 	self.segmentCount = 0
 	self.ga = nil
+	self.skunkInstance = nil
 
 	-- ga related variables
-	self.newGene = 0
-	self.oldGene = 0
+	self.newGene = nil
+	self.oldGene = nil
 	self.populationSize = 0
 	self.geneIndex = 1
 
@@ -37,8 +38,13 @@ function new()
 	self.newSegment = newSegment
 	self.update = update
 	self.newSegmentFromGA = newSegmentFromGA
+	self.setSkunkInstance = setSkunkInstance
 
 	return self
+end
+
+function setSkunkInstance(self, skunk)
+	self.skunkInstance = skunk
 end
 
 function generate(self, startPointX, startPointY)
@@ -165,7 +171,7 @@ function newSegmentFromGA(self)
 
 end
 
-function update(self, posx, speed)
+function update(self, posx)
 	
 	self.traveled = self.traveled + posx - self.lastPosX
 	self.lastPosX = posx
@@ -182,8 +188,11 @@ function update(self, posx, speed)
 		elseif self.segmentCount > FRACTAL_GENERATION_COUNT then
 			self.oldGene = self.newGene		
 			self.newGene = self:newSegmentFromGA()
+			
+			-- fitness function
+			local vx, vy = self.skunkInstance:getLinearVelocity()
+			local speed = math.abs(vx) -- + math.abs(vy)
 
-			speed = speed or 0
 			self.oldGene:setFitness(speed)
 			print("fitness: " .. speed/_G.NORMALIZINGVALUE)
 		else 

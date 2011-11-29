@@ -54,9 +54,7 @@ end
 
 function update()
 	skunkInstance.update()
-	local vx, vy = skunkInstance:getLinearVelocity()
-	g:update(skunkInstance.x, vx+vy)
-	
+	g:update(skunkInstance.x)
 	updateCamera()
 end
 
@@ -95,6 +93,7 @@ function new()
 	globalLayer:insert(Collectable.getCollectablesLayer())
 
 	g = ground.new()
+	g:setSkunkInstance(skunkInstance)
 	g:generate(startPointX, startPointY)
 	globalLayer:insert(g)
 

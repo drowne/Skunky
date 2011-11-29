@@ -2,7 +2,7 @@ module (..., package.seeall)
 
 local gene = require("gene")
 
-_G.NORMALIZINGVALUE = 3000
+_G.NORMALIZINGVALUE = 1000
 
 new = function(population, populationSize)
 	
@@ -10,6 +10,7 @@ new = function(population, populationSize)
 	--self.population = population or {}
 	self.populationSize = #population or populationSize or 100	
 	self.population = {}
+	self.populationCount = 0
 
 	if population then
 		for z=1, #population, 5 do
@@ -42,6 +43,9 @@ function getPopulationSize(self)
 end
 
 function produceNextGeneration(self)
+
+	print("producing population #" .. self.populationCount)
+	self.populationCount = self.populationCount +1
 
 	for i=1, #self.population do
 		local chance = math.random()
@@ -77,6 +81,8 @@ function produceNextGeneration(self)
 		temp:mutate()
 		table.insert(self.population, temp)
 	end
+
+	print("population count: " .. #self.population .. " killed: " .. killed)	
 
 end
 
