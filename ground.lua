@@ -147,7 +147,7 @@ function newSegmentFromGA(self)
 
 	local gene = self.ga:getGene(self.geneIndex)
 
-	if self.geneIndex > self.populationSize +1 then
+	if self.geneIndex > self.populationSize +2 then
 		self.ga:produceNextGeneration()
 		self.geneIndex = 1
 	else
