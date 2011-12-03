@@ -10,7 +10,6 @@
 * [DONE] Make a GA for the segments
 * Use the PCGed control points to distribute the collectables in proper places
 * Calculate a score
-* Find a fitness value for a player/level combination
 * [DONE] Get and store some data about the player/level combination
 * [DONE] Generate a next level
 * [DONE] Generate the next level using the collected data from previous levels

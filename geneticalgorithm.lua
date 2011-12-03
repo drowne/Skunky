@@ -65,22 +65,26 @@ function produceNextGeneration(self)
 
 	local killed = self.populationSize - #self.population
 
-	--[[for j=1, killed/2, 2 do
+	-- offspring generation
+	for j=1, killed/2, 2 do
 		
 		local father = self.population[j]
 		local mother = self.population[j+1]
 
 		local child1, child2 = father:reproduce(mother)
 		
+		-- mutate one of them
+		child2:mutate()
+
 		table.insert(self.population, child1)
 		table.insert(self.population, child2)
-	end]]-- offspring generation, doesn't really work
+	end
 
-	for j=1, killed do
+	--[[for j=1, killed do
 		local temp = self.population[j]
 		temp:mutate()
 		table.insert(self.population, temp)
-	end
+	end]]-- 
 
 	print("population count: " .. #self.population .. " killed: " .. killed)	
 
