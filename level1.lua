@@ -27,6 +27,7 @@ local startPointX = -_H/2.4
 local startPointY = 200
 local targetX = _H * 1.2
 local targetY = _W * 1.5
+local clouds = display.newImage("clouds.png")
 
 local scoreText
 local collectableText
@@ -41,7 +42,6 @@ end
 
 function setupBackground()
 	
-	local clouds = display.newImage("clouds.png")
 	clouds:toBack()
 	clouds.x = _W - 50
 	clouds.y = 50
@@ -126,12 +126,21 @@ function updateCollectables(count)
 	collectableText:setReferencePoint(display.TopRightReferencePoint)
 end
 
+function updateClouds()
+	clouds.x = clouds.x - 1;	
+
+	if clouds.x < -800 then
+		clouds.x = _W + 800
+	end
+end
+
 function update()
 	skunkInstance.update()
 	g:update(skunkInstance.x)
 	updateCamera()
 	updateScore(skunkInstance.x)
-	updateCollectables(skunkInstance.collectableCount)
+	updateCollectables(skunkInstance.collectableCount)	
+	updateClouds()
 end
 
 function jump()
