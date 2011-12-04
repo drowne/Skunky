@@ -13,8 +13,9 @@ settings = {
 	{
 		plist=
 		{
+
 			UIAppFonts = {
-				"SPACEBOY.TTF"
+				"Komikoz.ttf"
 			},
 			
 			UIStatusBarHidden=true,

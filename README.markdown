@@ -9,7 +9,7 @@
 * [DONE] Make the collectables
 * [DONE] Make a GA for the segments
 * DONE] Use the PCGed control points to distribute the collectables in proper places
-* Calculate and show a score
+* [DONE ]Calculate and show a score
 * [DONE] Get and store some data about the player/level combination
 * [DONE] Generate a next level
 * [DONE] Generate the next level using the collected data from previous levels

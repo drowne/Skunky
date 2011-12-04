@@ -28,6 +28,9 @@ local startPointY = 200
 local targetX = _H * 1.2
 local targetY = _W * 1.5
 
+local scoreText
+local collectableText
+
 function init()
 	--physics.setDrawMode( "hybrid" )
 	
@@ -70,6 +73,35 @@ function setupUI()
 	fartButton.y = _H - 70
 	fartButton:scale(0.66, 0.66)
 
+	local scoreTextLabel = display.newText("SCORE", 0,0, "Komikoz", 24)
+	scoreTextLabel:setTextColor(0, 0, 0)
+	scoreTextLabel:setReferencePoint(display.TopLeftReferencePoint)
+	scoreTextLabel.x = - 180
+	scoreTextLabel.y = 0
+	
+	scoreText = display.newText("0", 0,0, "Komikoz", 24)
+	scoreText:setReferencePoint(display.TopLeftReferencePoint)
+	scoreText:setTextColor(0, 0, 0)
+	scoreText.x = 0
+	scoreText.y = 0
+	
+	local collectableTextLabel = display.newText("FART COINS", 0,0, "Komikoz", 20)
+	collectableTextLabel:setTextColor(0, 0, 0)
+	collectableTextLabel:setReferencePoint(display.TopRightReferencePoint)
+	collectableTextLabel.x = 30
+	collectableTextLabel.y = 50
+	
+	collectableText = display.newText("0", 0,0, "Komikoz", 20)
+	collectableText:setReferencePoint(display.TopRightReferencePoint)
+	collectableText:setTextColor(0, 0, 0)
+	collectableText.x = 100 
+	collectableText.y = 50
+
+	UILayer:insert(scoreTextLabel)
+	UILayer:insert(scoreText)
+	UILayer:insert(collectableTextLabel)
+	UILayer:insert(collectableText)
+
 end
 
 function updateCamera()
@@ -77,10 +109,17 @@ function updateCamera()
 	globalLayer.y = -skunkInstance.y + 200
 end
 
+function updateScore(score)
+	scoreText.text = math.floor(score) - 400
+	scoreText.x = 0
+	scoreText:setReferencePoint(display.TopLeftReferencePoint)
+end
+
 function update()
 	skunkInstance.update()
 	g:update(skunkInstance.x)
 	updateCamera()
+	updateScore(skunkInstance.x)
 end
 
 function jump()
