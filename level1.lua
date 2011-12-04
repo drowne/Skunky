@@ -41,6 +41,11 @@ end
 
 function setupBackground()
 	
+	local clouds = display.newImage("clouds.png")
+	clouds:toBack()
+	clouds.x = _W - 50
+	clouds.y = 50
+
 	local background = display.newImage("background.png")
 	-- fixed background, uncomment to have a dynamic one
 	--globalLayer:insert(background)
