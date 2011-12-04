@@ -8,6 +8,8 @@ local Epsilon = 0.00001
 
 local collectableTreshold = 100
 local lastCollectable = 0
+local collectableCounter = 0
+local collectableGroupSize = 20
 
 function new()
     
@@ -185,6 +187,13 @@ function drawNurbs (self, precision)
         if points[i].x > lastCollectable + collectableTreshold then
             lastCollectable = points[i].x
             placeNewCollectable(points[i].x, points[i].y - 50)
+            collectableCounter = collectableCounter + 1
+
+            if collectableCounter % collectableGroupSize == 0 then
+                collectableTreshold = 1000
+            else
+                collectableTreshold = 100
+            end
         end
         
         physics.addBody(line, "static",  { shape = lineShape} )

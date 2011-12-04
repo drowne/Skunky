@@ -21,12 +21,12 @@ _G.localhighscore = 0
 
 -- drawing variables
 local globalLayer = display.newGroup()
+local UILayer = display.newGroup()
 local skunkInstance
 local startPointX = -_H/2.4
 local startPointY = 200
 local targetX = _H * 1.2
 local targetY = _W * 1.5
-local g
 
 function init()
 	--physics.setDrawMode( "hybrid" )
@@ -48,6 +48,30 @@ function setupBackground()
 	
 end
 
+function setupUI()
+	local jumpButton = ui.newButton {
+		default = "jump.png",
+		onPress = jump
+	}
+
+	local fartButton = ui.newButton {
+		default = "fart.png",
+		onPress = fart
+	}
+
+	UILayer:insert(jumpButton)
+	UILayer:insert(fartButton)
+
+	jumpButton.x = _W * 1.4
+	jumpButton.y = _H - 70
+	jumpButton:scale(0.66, 0.66)
+
+	fartButton.x = _W * 1
+	fartButton.y = _H - 70
+	fartButton:scale(0.66, 0.66)
+
+end
+
 function updateCamera()
 	globalLayer.x = -skunkInstance.x
 	globalLayer.y = -skunkInstance.y + 200
@@ -59,12 +83,23 @@ function update()
 	updateCamera()
 end
 
-function onTap(event)
+function jump()
 	
 	if not _G.firstTouch then
 		if not _G.gameEnded then
 			skunkInstance.jump()
-			--ground.addPoints(event.x, event.y)			
+		end
+	else
+		_G.firstTouch = false
+	end
+	
+end
+
+function fart()
+	
+	if not _G.firstTouch then
+		if not _G.gameEnded then
+			skunkInstance.fart()
 		end
 	else
 		_G.firstTouch = false
@@ -80,6 +115,7 @@ function new()
 	
 	init()
 	setupBackground()	
+	setupUI()
 
 	skunkInstance = skunk.new()
 	globalLayer:insert(skunkInstance)
@@ -90,8 +126,6 @@ function new()
 	g:generate(startPointX, startPointY)
 	globalLayer:insert(g)
 
-	Runtime:addEventListener("enterFrame", update)
-	Runtime:addEventListener("tap", onTap)
-	
+	Runtime:addEventListener("enterFrame", update)	
 	return globalLayer
 end

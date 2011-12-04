@@ -7,7 +7,7 @@ local GA       = require("geneticalgorithm")
 local TOTAL_ITERATIONS = 2
 local OFFSET = 500
 local NURBS_COUNT = 5
-local SEGMENT_WIDTH = 600
+local SEGMENT_WIDTH = 1000
 local SEGMENT_HEIGHT = 100
 local FRACTAL_GENERATION_COUNT = 10
 

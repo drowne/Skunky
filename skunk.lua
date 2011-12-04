@@ -3,10 +3,10 @@ module (..., package.seeall)
 local globalLayer 	= display.newGroup()
 
 local jumpForce 	= 200
-local fartForce		= 3
+local fartForce		= 300
 local canJump 		= true
 local canFart		= true
-local timeToFart	= 500
+local timeToFart	= 1000
 local timeToJump 	= 1000
 
 local hspeed, vspeed, oldX, oldY
@@ -89,8 +89,8 @@ end
 
 function globalLayer:fart()
 	-- check if it can jump or not
-	if canFartAgain	then
-		globalLayer:applyLinearImpulse(fartForce,0)
+	if canFart	then
+		globalLayer:applyForce(fartForce, 0, globalLayer.x, globalLayer.y)
 		canFart = false
 		timer.performWithDelay(timeToFart, canFartAgain)
 	end
