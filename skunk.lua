@@ -2,7 +2,7 @@ module (..., package.seeall)
 
 local globalLayer 	= display.newGroup()
 
-local jumpForce 	= 8
+local jumpForce 	= 200
 local fartForce		= 3
 local canJump 		= true
 local canFart		= true
@@ -77,7 +77,8 @@ end
 function globalLayer:jump()
 	-- check if it can jump or not
 	if canJump	then
-		globalLayer:applyLinearImpulse(0,-jumpForce)
+		--globalLayer:applyLinearImpulse(0,-jumpForce)
+		globalLayer:applyForce(0, -jumpForce, globalLayer.x, globalLayer.y)
 		canJump = false
 		timer.performWithDelay(timeToJump, canJumpAgain)
 	end

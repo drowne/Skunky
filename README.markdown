@@ -4,7 +4,7 @@
 
 **TO-DO**
 
-* Use the PCGed control points to generate a smooth curve using NURBS
+* [DONE] Use the PCGed control points to generate a smooth curve using NURBS
 * [DONE] Make the speed boost with farting
 * [DONE] Make the collectables
 * [DONE] Make a GA for the segments
