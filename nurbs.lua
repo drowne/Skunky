@@ -168,14 +168,15 @@ function drawNurbs (self, precision)
     local points = self:generateNurbsCurve (precision)
 
     for i = 1, precision-1 do 
-        local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);        
+
         line:setColor(23, 114, 69);
-        line.width = 5;        
+        line.width = 30;        
 
         -- physic body
         local xDist = (points[i+1].x - points[i].x)
         local yDist = (points[i+1].y - points[i].y)
-        local lineShape = { 0, 0, xDist, yDist, --xDist,yDist+20, -xDist,-yDist+20 
+        local lineShape = { 0, -15, xDist, yDist - 15, --xDist,yDist+20, -xDist,-yDist+20 
         }
 
         if points[i].x > lastCollectable + collectableTreshold then
@@ -192,14 +193,14 @@ function drawNurbs (self, precision)
         
         physics.addBody(line, "static",  { shape = lineShape} )
 
-        local rectWidth = (points[i + 1].x - points[i].x ) / 3
-        local rect = display.newRect(points[i].x, points[i].y, rectWidth, 600)
+        local rectWidth = (points[i + 1].x - points[i].x ) / 2
+        local rect = display.newRect(points[i].x, points[i].y, rectWidth, 900)
         rect:setFillColor(23, 114, 69)
         self:insert( rect )
 
 
 
-        rect = display.newRect(points[i + 1].x - rectWidth, points[i + 1].y, rectWidth, 600)
+        rect = display.newRect(points[i].x + rectWidth, points[i + 1].y, rectWidth, 900)
         rect:setFillColor(0, 102, 0)
         self:insert( rect )
 
