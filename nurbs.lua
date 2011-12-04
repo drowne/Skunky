@@ -170,18 +170,12 @@ function drawNurbs (self, precision)
     for i = 1, precision-1 do 
         local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         line:setColor(255, 0, 0);
-        line.width = 5;
-
-        local ybalance = -1
-
-        if points[i+1].y > points[i].y then
-            ybalance = 1
-        end
+        line.width = 5;        
 
         -- physic body
-        local xDist = (points[i+1].x - points[i].x)/2
-        local yDist = (points[i+1].y - points[i].y)/2
-        local lineShape = { -xDist,-yDist+ybalance, xDist,yDist+ybalance, --xDist,yDist+20, -xDist,-yDist+20 
+        local xDist = (points[i+1].x - points[i].x)
+        local yDist = (points[i+1].y - points[i].y)
+        local lineShape = { 0, 0, xDist, yDist, --xDist,yDist+20, -xDist,-yDist+20 
         }
 
         if points[i].x > lastCollectable + collectableTreshold then
