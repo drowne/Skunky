@@ -168,15 +168,28 @@ function drawNurbs (self, precision)
     local points = self:generateNurbsCurve (precision)
 
     for i = 1, precision-1 do 
-        local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);        
+        local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y)      
 
-        line:setColor(255, 255, 255);
-        line.width = 30;        
+        line:setColor(255, 255, 255)
+        line.width = 10  
+        
+        -- graphics lines
+        local line2 = display.newLine(points[i].x, points[i].y +10, points[i + 1].x, points[i + 1].y +10)     
+        line2:setColor(211, 211, 240)
+        line2.width = 10
+
+        local line3 = display.newLine(points[i].x, points[i].y +20, points[i + 1].x, points[i + 1].y +20)     
+        line3:setColor(170, 170, 200)
+        line3.width = 10
+
+        local line4 = display.newLine(points[i].x, points[i].y +30, points[i + 1].x, points[i + 1].y +30)     
+        line4:setColor(150, 150, 170)
+        line4.width = 10
 
         -- physic body
         local xDist = (points[i+1].x - points[i].x)
         local yDist = (points[i+1].y - points[i].y)
-        local lineShape = { 0, -15, xDist, yDist - 15, --xDist,yDist+20, -xDist,-yDist+20 
+        local lineShape = { 0, -10, xDist, yDist - 10, --xDist,yDist+20, -xDist,-yDist+20 
         }
 
         if points[i].x > lastCollectable + collectableTreshold then
@@ -190,21 +203,27 @@ function drawNurbs (self, precision)
                 collectableTreshold = 100
             end
         end
+
+        line4:toFront()
+        line3:toFront()
+        line2:toFront()
+        line:toFront()
         
         physics.addBody(line, "static",  { shape = lineShape} )
 
         local rectWidth = (points[i + 1].x - points[i].x ) / 2
-        local rect = display.newRect(points[i].x, points[i].y, rectWidth, 900)
+        local rect = display.newRect(points[i].x, points[i].y +20, rectWidth, 900)
         rect:setFillColor(248, 248, 255)
         self:insert( rect )
 
-
-
-        rect = display.newRect(points[i].x + rectWidth, points[i + 1].y, rectWidth, 900)
+        rect = display.newRect(points[i].x + rectWidth, points[i + 1].y +20, rectWidth, 900)
         rect:setFillColor(211, 211, 240)
         self:insert( rect )
 
         self:insert( line )
+        self:insert( line2 )
+        self:insert( line3 )
+        self:insert( line4 )
     end 
 end
 
