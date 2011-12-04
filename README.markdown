@@ -13,5 +13,4 @@
 * [DONE] Get and store some data about the player/level combination
 * [DONE] Generate a next level
 * [DONE] Generate the next level using the collected data from previous levels
-* Display a nice end level screen with stats
 * [DONE] Facebook Integration & Posting to user wall

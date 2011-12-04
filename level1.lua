@@ -3,10 +3,10 @@ module (..., package.seeall)
 -- includes
 local physics     = require("physics")
 local skunk       = require("skunk")
-local Collectable = require("collectable")
 local highscore   = require("highscore")
 local ground      = require("ground")
 local test		  = require("test")
+local Collectable = require("collectable")
 
 -- utils variables
 local _H = display.contentHeight
@@ -29,7 +29,7 @@ local targetY = _W * 1.5
 local g
 
 function init()
-	physics.setDrawMode( "hybrid" )
+	--physics.setDrawMode( "hybrid" )
 	
 	physics.start()
 	-- load highscore
@@ -74,14 +74,6 @@ end
 
 function removeListeners()
 	Runtime:removeEventListener("enterFrame", update)
-	Runtime:removeEventListener("tap", onTap)
-end
-
-function populateCollectables()
-
-	-- create a collectable
-	--local choco1 = Collectable.new(0, 100)
-
 end
 
 function new()
@@ -97,8 +89,6 @@ function new()
 	g:setSkunkInstance(skunkInstance)
 	g:generate(startPointX, startPointY)
 	globalLayer:insert(g)
-
-	populateCollectables()
 
 	Runtime:addEventListener("enterFrame", update)
 	Runtime:addEventListener("tap", onTap)

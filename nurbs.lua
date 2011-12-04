@@ -1,9 +1,13 @@
 module (..., package.seeall)
 
 local ControlPoint = require("ControlPoint")
+local Collectable = require("collectable")
 
 local PRECISION = 30
 local Epsilon = 0.00001
+
+local collectableTreshold = 100
+local lastCollectable = 0
 
 function new()
     
@@ -166,16 +170,31 @@ function drawNurbs (self, precision)
         line:setColor(255, 0, 0);
         line.width = 5;
 
+        local ybalance = -1
+
+        if points[i+1].y > points[i].y then
+            ybalance = 1
+        end
+
         -- physic body
-        local xDist = (points[i].x - points[i+1].x)/2
-        local yDist = (points[i].y - points[i+1].y)/2
-        local lineShape = { -xDist,-yDist, xDist,yDist, --xDist,yDist+20, -xDist,-yDist+20 
+        local xDist = (points[i+1].x - points[i].x)/2
+        local yDist = (points[i+1].y - points[i].y)/2
+        local lineShape = { -xDist,-yDist+ybalance, xDist,yDist+ybalance, --xDist,yDist+20, -xDist,-yDist+20 
         }
+
+        if points[i].x > lastCollectable + collectableTreshold then
+            lastCollectable = points[i].x
+            placeNewCollectable(points[i].x, points[i].y - 50)
+        end
         
         physics.addBody(line, "static",  { shape = lineShape} )
 
         self:insert( line )
     end 
+end
+
+function placeNewCollectable(x, y)
+    Collectable.new(x, y)
 end
 
 function addPoints (self, _x, _y)
@@ -188,8 +207,8 @@ function addPoints (self, _x, _y)
 
     table.insert (self.controlPoints, point)
 
-    local rect = display.newRect(point.x, point.y, 15, 15)
-    self:insert(rect) 
+    --local rect = display.newRect(point.x, point.y, 15, 15)
+    --self:insert(rect) 
 
     if(self.numPoints >= self.maxControlPoints) then
         self:drawNurbs(30)

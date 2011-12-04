@@ -14,10 +14,10 @@ local hspeed, vspeed, oldX, oldY
 function new()
 	
 	-- draw the skunk and add it to the globallayer
-	--local skunkImage = display.newImage("skunk.png") 
-	--globalLayer:insert(skunkImage)
-	--skunkImage.x = 0
-	--skunkImage.y = 0
+	local skunkImage = display.newImage("skunk.png") 
+	globalLayer:insert(skunkImage)
+	skunkImage.x = 0
+	skunkImage.y = 0
 	
 	globalLayer.name = "skunk"
 	
