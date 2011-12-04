@@ -44,7 +44,7 @@ end
 
 function produceNextGeneration(self)
 
-	print("producing population #" .. self.populationCount)
+	--print("producing population #" .. self.populationCount)
 	self.populationCount = self.populationCount +1
 
 	for i=1, #self.population do
@@ -86,7 +86,7 @@ function produceNextGeneration(self)
 		table.insert(self.population, temp)
 	end
 
-	print("population count: " .. #self.population .. " killed: " .. killed)	
+	--print("population count: " .. #self.population .. " killed: " .. killed)	
 
 end
 

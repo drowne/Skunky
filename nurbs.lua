@@ -169,7 +169,7 @@ function drawNurbs (self, precision)
 
     for i = 1, precision-1 do 
         local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-        line:setColor(255, 0, 0);
+        line:setColor(23, 114, 69);
         line.width = 5;        
 
         -- physic body
@@ -191,6 +191,17 @@ function drawNurbs (self, precision)
         end
         
         physics.addBody(line, "static",  { shape = lineShape} )
+
+        local rectWidth = (points[i + 1].x - points[i].x ) / 3
+        local rect = display.newRect(points[i].x, points[i].y, rectWidth, 600)
+        rect:setFillColor(23, 114, 69)
+        self:insert( rect )
+
+
+
+        rect = display.newRect(points[i + 1].x - rectWidth, points[i + 1].y, rectWidth, 600)
+        rect:setFillColor(0, 102, 0)
+        self:insert( rect )
 
         self:insert( line )
     end 

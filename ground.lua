@@ -161,8 +161,7 @@ function newSegmentFromGA(self)
 
 	for i=1,#cp do
 		cp[i].x = cp[i].x + difX
-		cp[i].y = cp[i].y + difY
-		print(cp[i].x, cp[i].y)
+		cp[i].y = cp[i].y + difY		
 	end
 
 	self:newSegment(cp)
@@ -194,7 +193,7 @@ function update(self, posx)
 			local speed = math.abs(vx) -- + math.abs(vy)
 
 			self.oldGene:setFitness(speed)
-			print("fitness: " .. speed/_G.NORMALIZINGVALUE)
+			--print("fitness: " .. speed/_G.NORMALIZINGVALUE)
 		else 
 			self:generateNewSegment(self.lastX, self.lastY, self.lastX + SEGMENT_WIDTH, self.lastY + SEGMENT_HEIGHT)
 			local cp = curve:getControlPoints()

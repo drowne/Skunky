@@ -17,7 +17,8 @@ function new(_x, _y)
         if event.phase == "began" and event.other.name == "skunk" and collectable.isVisible then
 			event.other.pickCollectable()
 			collectable.isVisible = false
-			audio.play( collectableSound )			
+			audio.play( collectableSound )	
+			collectable:removeSelf()
         end
 	end
 

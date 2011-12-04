@@ -1,6 +1,11 @@
 module (..., package.seeall)
 
+local Vector2D = require("vector2d")
+
 local globalLayer 	= display.newGroup()
+
+local SPEED_LIMIT 	= 500
+local DAMPING 		= 5
 
 local jumpForce 	= 200
 local fartForce		= 300
@@ -23,6 +28,7 @@ function new()
 	
 	globalLayer.x = 400
 	globalLayer.y = 0
+	globalLayer.collectableCount = 0
 
 	physics.addBody(globalLayer, {
 									radius = 15,
@@ -39,7 +45,8 @@ function new()
 end
 
 function globalLayer:pickCollectable()
-	print("collectable")
+	globalLayer.collectableCount = globalLayer.collectableCount + 1
+	--print("collectable")
 end
 
 function globalLayer:update()
@@ -52,6 +59,16 @@ function globalLayer:update()
 	
 	oldX = globalLayer.x
 	oldY = globalLayer.y
+
+	local vx, vy = globalLayer:getLinearVelocity()
+	local velocity = Vector2D:new(vx, vy)
+	local speed = velocity:magnitude()
+	
+	if(speed > SPEED_LIMIT) then
+		globalLayer.linearDamping = DAMPING
+	else
+		globalLayer.linearDamping = 0 
+	end
 
 	--globalLayer:applyLinearImpulse(0.1,0)
 	

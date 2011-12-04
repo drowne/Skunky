@@ -115,11 +115,18 @@ function updateScore(score)
 	scoreText:setReferencePoint(display.TopLeftReferencePoint)
 end
 
+function updateCollectables(count)
+	collectableText.text = count
+	--collectableText.x = 0
+	collectableText:setReferencePoint(display.TopRightReferencePoint)
+end
+
 function update()
 	skunkInstance.update()
 	g:update(skunkInstance.x)
 	updateCamera()
 	updateScore(skunkInstance.x)
+	updateCollectables(skunkInstance.collectableCount)
 end
 
 function jump()
