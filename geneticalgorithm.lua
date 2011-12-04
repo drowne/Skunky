@@ -2,7 +2,7 @@ module (..., package.seeall)
 
 local gene = require("gene")
 
-_G.NORMALIZINGVALUE = 1000
+_G.NORMALIZINGVALUE = 800
 
 new = function(population, populationSize)
 	
@@ -66,7 +66,7 @@ function produceNextGeneration(self)
 	local killed = self.populationSize - #self.population
 
 	-- offspring generation
-	for j=1, killed/2, 2 do
+	--[[for j=1, killed/2, 2 do
 		
 		local father = self.population[j]
 		local mother = self.population[j+1]
@@ -79,12 +79,12 @@ function produceNextGeneration(self)
 		table.insert(self.population, child1)
 		table.insert(self.population, child2)
 	end
-
-	--[[for j=1, killed do
+	]]--
+	for j=1, killed do
 		local temp = self.population[j]
 		temp:mutate()
 		table.insert(self.population, temp)
-	end]]-- 
+	end
 
 	print("population count: " .. #self.population .. " killed: " .. killed)	
 

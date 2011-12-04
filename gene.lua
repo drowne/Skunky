@@ -87,14 +87,14 @@ function reproduce(self, other)
 	table.sort( gene1points, 
 
 		function(a, b) 
-			return a.x < b.x
+			return a.x > b.x
 		end
 	)
 
 	table.sort( gene2points, 
 
 		function(a, b) 
-			return a.x < b.x
+			return a.x > b.x
 		end
 	)
 

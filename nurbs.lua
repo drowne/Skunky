@@ -161,7 +161,7 @@ end
 function drawNurbs (self, precision)
     local points = self:generateNurbsCurve (precision)
 
-    for i = 1, precision - 1, 1 do 
+    for i = 1, precision-1 do 
         local line = display.newLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         line:setColor(255, 0, 0);
         line.width = 5;
@@ -169,9 +169,10 @@ function drawNurbs (self, precision)
         -- physic body
         local xDist = (points[i].x - points[i+1].x)/2
         local yDist = (points[i].y - points[i+1].y)/2
-        local lineShape = { -xDist,-yDist, xDist,yDist--[[, xDist,yDist+10, -xDist,-yDist+10]] }
+        local lineShape = { -xDist,-yDist, xDist,yDist, --xDist,yDist+20, -xDist,-yDist+20 
+        }
         
-        physics.addBody(line, "static", { shape = lineShape} )
+        physics.addBody(line, "static",  { shape = lineShape} )
 
         self:insert( line )
     end 

@@ -30,6 +30,7 @@ local g
 
 function init()
 	physics.setDrawMode( "hybrid" )
+	
 	physics.start()
 	-- load highscore
 	_G.localhighscore = highscore.getHighScore()

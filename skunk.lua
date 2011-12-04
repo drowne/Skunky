@@ -24,14 +24,17 @@ function new()
 	globalLayer.x = 400
 	globalLayer.y = 0
 
-	physics.addBody(globalLayer, "dynamic", {
+	physics.addBody(globalLayer, {
 									radius = 15,
-									density = 1.0, 
+									density = 1, 
 									friction = 0.3, 
 									bounce = 0.2, 
 									isSensor = false,
-									isBullet = true})
+									isBullet = true
+								})
 	
+	--globalLayer.isSleepingAllowed = false
+
 	return globalLayer
 end
 
