@@ -29,6 +29,10 @@ local targetX = _H * 1.2
 local targetY = _W * 1.5
 local clouds = display.newImage("clouds.png")
 
+-- screening variables
+local cameraHeight = 1000
+local zoomFactor = 0.2
+
 local scoreText
 local collectableText
 
@@ -110,8 +114,8 @@ function setupUI()
 end
 
 function updateCamera()
-	globalLayer.x = -skunkInstance.x
-	globalLayer.y = -skunkInstance.y + 200
+	globalLayer.x = -skunkInstance.x * zoomFactor
+	globalLayer.y = (-skunkInstance.y + cameraHeight) * zoomFactor
 end
 
 function updateScore(score)
@@ -185,6 +189,11 @@ function new()
 	g:setSkunkInstance(skunkInstance)
 	g:generate(startPointX, startPointY)
 	globalLayer:insert(g)
+
+	-- zoom level
+	globalLayer:scale(zoomFactor, zoomFactor)
+
+	--UILayer.isVisible = false
 
 	Runtime:addEventListener("enterFrame", update)	
 	return globalLayer
