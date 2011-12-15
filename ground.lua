@@ -13,7 +13,8 @@ local FRACTAL_GENERATION_COUNT = 10
 
 function new()
 
-	math.randomseed(os.time())
+	--math.randomseed(os.time())
+	math.randomseed(100)
 
 	local self = display.newGroup()
 	self.fractalGeneratedPoints = {}
